@@ -1,5 +1,7 @@
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+import { useNavigate } from "react-router-dom"
+
 
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -7,6 +9,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext()
   const { user } = useAuthContext()
+  let navigate = useNavigate(); 
 
 
   const handleClick = async () => {
@@ -26,14 +29,27 @@ const WorkoutDetails = ({ workout }) => {
     }
   }
 
+  const handleRedirect = () => {
+    let path = `/edit/${workout._id}`; 
+    navigate(path);
+  }
+
   return (
     <div className="workout-details">
       <h4>{workout.title}</h4>
       <p><strong>Load (kg): </strong>{workout.load}</p>
       <p><strong>Reps: </strong>{workout.reps}</p>
       <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true})}</p>
-      <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+      
+        <span style={{ display: 'inline-block', marginTop: '40px' }} className="material-symbols-outlined" onClick={handleClick}>
+          Delete
+        </span>
+        <span style={{ display: 'inline-block' }} className="material-icons-outlined" onClick={handleRedirect}>
+          <i className="fas fa-pencil-alt" /> Edit
+        </span>
+      
     </div>
+    
   )
 }
 

@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import EditPage from './pages/EditPage';
 
 function App() {
 const { user } = useAuthContext()
@@ -26,6 +27,10 @@ const { user } = useAuthContext()
             <Route
               path="/signup"
               element={!user ?<Signup /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/edit/:id"
+              element={user ? <EditPage /> : <Navigate to="/login" />}
             />
           </Routes>
         </div>
